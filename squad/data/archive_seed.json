@@ -1,0 +1,54 @@
+[
+    {
+        "data_creation_instruction": "Let's read the following passage and rewrite it in a few different ways, each one separated by a newline.",
+        "hyperparameters": {
+            "lora_rank": 32,
+            "lora_alpha": 64,
+            "lora_dropout": 0,
+            "learning_rate": 0.001,
+            "num_epochs": 10,
+            "gradient_accumulation_steps": 1
+        },
+        "accuracy": 0.4937,
+        "normalized_gain": 0.253575114
+    },
+    {
+        "data_creation_instruction": "Let's read the following passage and produce a long list of implications derived directly or indirectly from the content.",
+        "hyperparameters": {
+            "lora_rank": 32,
+            "lora_alpha": 64,
+            "lora_dropout": 0,
+            "learning_rate": 0.001,
+            "num_epochs": 10,
+            "gradient_accumulation_steps": 1
+        },
+        "accuracy": 0.4929,
+        "normalized_gain": 0.253715968
+    },
+    {
+        "data_creation_instruction": "Repeat the passage verbatim.",
+        "hyperparameters": {
+            "lora_rank": 32,
+            "lora_alpha": 64,
+            "lora_dropout": 0,
+            "learning_rate": 0.001,
+            "num_epochs": 10,
+            "gradient_accumulation_steps": 1
+        },
+        "accuracy": 0.335,
+        "normalized_gain": 0.0
+    },
+    {
+        "data_creation_instruction": "",
+        "hyperparameters": {
+            "lora_rank": 32,
+            "lora_alpha": 64,
+            "lora_dropout": 0,
+            "learning_rate": 0.001,
+            "num_epochs": 10,
+            "gradient_accumulation_steps": 1
+        },
+        "accuracy": 0.1379,
+        "normalized_gain": -0.264447052
+    }
+]

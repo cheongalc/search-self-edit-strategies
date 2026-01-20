@@ -1,0 +1,45 @@
+You are trying to internalize information from a text passage into your weights such that when you do not have access to the passage, you can still recall the passage's content perfectly. To achieve this, you will create a learning plan template consisting of a data creation instruction, analogous to note-taking, and a set of hyperparameters for fine-tuning.
+
+You currently do not have access to the passage. At a later time, a copy of yourself will receive the passage, generate strings of training sequences, and train based on the learning plan template you create right now. Therefore, ensure that your learning plan templates are clear, explicit, and easily actionable by an LLM. Think about how you would best achieve complete understanding of the material and write the data creation instruction accordingly.
+
+It is unlikely that your first attempt will be your best. For this reason, you should be creative about your learning plans. Avoid only using standard data transformation techniques (e.g. recitation, summarization, tokenization) or commonly used hyperparameters unless you are sure that they are the best. You can also combine different techniques. You should experiment and test novel strategies. Prefer high risk, high reward instructions over predictable low-reward ones. Do not be afraid to try unconventional approaches. Do not follow your first instinct, think carefully about how to best internalize the passage first before writing your learning plan.
+
+Your learning plan must be output as a single JSON object. Do not output anything outside the JSON. The JSON must follow this structure:
+
+{
+  "data_creation_instruction": <string>,
+  "hyperparameters": {
+    "lora_rank": <int>,
+    "lora_alpha": <int>,
+    "lora_dropout": <float>,
+    "learning_rate": <float>,
+    "num_epochs": <int>,
+    "gradient_accumulation_steps": <int>
+  }
+}
+
+Detailed explanation of what each part means:
+
+1. "data_creation_instruction":
+    After receiving the passage, you will apply the "data_creation_instruction" you define here to convert the passage into a list of strings. Each string will be a training sequence that contains content derived from the passage in whatever form you consider most effective for your own learning. A copy of yourself will train directly on these training sequences. Focus on creating data creation instructions that encode the meaning of the passage in a concise format that you deem to be the most suitable. Do not recreate the passage.
+
+    Important Note: The passage will be provided separately when the "data_creation_instruction" is executed. At that time, you will apply the instruction to the passage to generate the training sequences for LoRA fine-tuning. Thus, do not include the passage nor any training passages in this JSON; only provide the instruction for how to process it.
+
+2. "hyperparameters":
+    Select hyperparameters that you believe will be most effective for learning with SFT using LoRA.
+
+    The fields mean:
+    - "lora_rank": rank of the low-rank matrices. Higher rank increases capacity. Typical values are powers of 2 between 4 and 64.
+    - "lora_alpha": scaling factor controlling the influence of LoRA updates.
+    - "lora_dropout": dropout used inside the LoRA adapters. This value ranges from 0.0 to 1.0.
+    - "learning_rate": initial learning rate for fine-tuning. Typical values lie in the range of 1e-5 to 5e-3.
+    - "num_epochs": how many epochs to train.
+    - "gradient_accumulation_steps": how many steps to accumulate gradients. Note that for memory reasons, the batch size per GPU is fixed at 1, thus you can only increase the effective batch size by increasing this parameter.
+
+Rules and requirements:
+- Output only the JSON object.
+- The JSON must be valid and syntactically correct.
+- Do not include explanations, commentary, or text outside the JSON.
+- Do not reference or restate these instructions in your JSON.
+- Structure and keys must match exactly.
+- Before generating the JSON, silently brainstorm 3 standard approaches to this task (e.g., summarization, keyword extraction). Discard them immediately. Your task is to generate a 'Fourth Option' - a strategy that is unorthodox, surprising, or counter-intuitive, but highly effective for your learning. After you have your idea solidified, ask yourself one last question: Suppose later a copy of yourself executes this instruction. Will the training sequences generated be non-empty and sufficient for you to learn the passage perfectly? If the answer is no, refine your instruction until the answer is yes.

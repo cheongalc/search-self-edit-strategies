@@ -1,0 +1,169 @@
+/*
+Think of the results of our method as a tensor with the shape (A,T,C,E).
+
+Dimension 0 = A = Number of articles.
+Dimension 1 = T = Number of self edit templates per article.
+Dimension 2 = C = Number of completions, i.e., instantiations of each self edit template.
+Dimension 3 = E = Different evaluation runs for each (article, template, completion) triplet.
+
+Recall that T*C = total number of self edits per article, and that A*T*C = total number of self edits in the whole experiment.
+
+Baseline results would also have the same shape (A,T,C,E). Except that for each article in dimension 0, everything in dimension 1, 2, 3 is a different evaluation run of the same baseline model on that article. So you can actually think of it as (A, T*C*E) for baseline results.
+*/
+{
+  "overall": {
+    // Take the baseline results (A,T,C,E). Compute the mean, reducing along axes 3,2,1,0. This answers the question: How well did the baseline do on average across all articles?
+    "baseline_mean_acc": 0.85,
+
+    // Take the baseline results (A,T,C,E). Compute the mean, reducing along axes 3,2,1 to get per-article means: (A,) shape. Then compute std dev, reducing across axis 0. This answers the question: How much did the baseline's performance vary across different articles? A high value means some articles are much harder for the baseline than others.
+    "std_of_(baseline_mean_acc_for_each_article)": 0.05, 
+
+    // Take our method's results (A,T,C,E). Compute the mean, reducing along axes 3,2,1,0. This answers the question: If I pick any self edit at random, how well did it do? This is the global average performance of our method.
+    "self_edit_mean_acc": 0.88,
+
+    // Take our method's results (A,T,C,E). Compute the mean, reducing along axes 3,2,1 to get per-article means. (A,) shape. Then compute std dev, reducing across axis 0.This answers the question: How much did our method's performance vary across different articles? This is similar to the baseline's "std_of_(baseline_mean_acc_for_each_article)" metric, but for our method instead of the baseline. It measures how consistent our method is across different content.
+    "std_of_(self_edit_mean_acc_for_each_article)": 0.06, 
+    
+    // Take our method's results (A,T,C,E). Compute the std dev, reducing across axis 3 to get (A, T, C) shape. Now compute the mean, reducing across axes 2,1,0. This answers the question: If I pick any self edit at random, how variable are its evaluation results? (This measures Evaluation Noise. It tells you how much the evaluation process itself (e.g., sampling temperature in vLLM) fluctuates for a fixed model.)
+    "self_edit_evaluation_noise": 0.01, 
+
+    // Take our method's results (A,T,C,E). Compute the mean across axis 3 to get (A,T,C) shape. Now compute the std dev across axis 2 to get (A,T) shape. This tells you: For a given article and template, what's the variability in performance due to different completions for that (article, template) pair. Now compute the mean of this value, reducing across axes 1,0. This answers the question: If I were to pick a self edit template at random, how much does the specific random completion (i.e. the instantiation) affect performance? This measures Instantiation Noise. It tells you how sensitive our method is to different instantiations of the same self edit template.
+    "self_edit_template_instantiation_noise": 0.03,
+
+    // Take the baseline results. (A,T,C,E). Compute the mean, reducing over axes 3,2,1. baseline_article_means=(A,) shape. Now take our method's results. (A,T,C,E). Compute the mean, reducing over axis 3. (A,T,C) shape. Now for each number in this (A,T,C) tensor, subtract the corresponding article's baseline mean, from baseline_article_means. This gives a float tensor of shape (A,T,C). Now compute the mean of this float tensor, reducing across axes 2,1,0. This answers the question: "If I pick any self edit at random, what's the gain it provides?" 
+    "self_edit_mean_gain": 0.03,
+
+    // Take the baseline results. (A,T,C,E). Compute the mean, reducing over axes 3,2,1. baseline_article_means=(A,) shape. Now take our method's results. (A,T,C,E). Compute the mean, reducing over axis 3. (A,T,C) shape. Now for each number in this (A,T,C) tensor, check if it is greater than its corresponding article's baseline mean, from baseline_article_means. This gives a boolean tensor of shape (A,T,C). Now compute the mean of this boolean tensor, reducing across axes 2,1,0. This answers the question: "If I pick any self edit at random, what is the probability that it outperforms the baseline for its article?" This measures how reliably our method improves over the baseline. A high mean gain could be driven by a few huge wins. Win rate tells you how reliable the improvement is.
+    "self_edit_win_rate": 0.65,
+
+    // Metric originating from Hake (1998) as a measure of student improvement. Normalized gain is defined as (adapter_acc - baseline_acc) / (1 - baseline_acc). Take the baseline results. (A,T,C,E). Compute the mean, reducing over axes 3,2,1. baseline_article_means=(A,) shape. Treat baseline_article_means as baseline_means_broadcast=(A,1,1) shape so it's compatible with (A,T,C) shape. Now take our method's results. (A,T,C,E). Compute mean over axis 3. (A,T,C). Now for each number in this (A,T,C) tensor, subtracting the corresponding article's baseline mean. This is equivalent to subtracting the whole (A,T,C) tensor by baseline_means_broadcast=(A,1,1) shape. This gives a float tensor of shape (A,T,C), representing raw gains. Divide this (A,T,C) tensor by (1 - baseline_means_broadcast) to get an (A,T,C) tensor of normalized gains. Finally, compute mean over axes 2,1,0 to get self_edit_normalized_gain. This answers the question: "How much do self edit templates from the current iteration outperform those from the previous iteration, accounting for the performance of self edits from the previous iteration?"
+    "self_edit_normalized_gain": 0.1
+  },
+  "timestamp": "...", // ISO 8601 timestamp of when the experiment was run
+  "dataset_path": "...", // path to dataset file used 
+  "dataset": {
+    // here we include the entire dataset object used in the experiment for reference 
+  },
+  "exp_name": "Name of experiment",
+  "num_articles": 5,
+  "num_self_edit_templates": 3,
+  "num_completions_per_template": 3,
+  "eval_times": 3,
+  "article_statistics": {
+    // This number is an index into the articles in the dataset. Its range is [0, num_articles-1].
+    "0": {
+      // Take the baseline results (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. This answers the question: How well did the baseline do on average on THIS article?
+      "baseline_mean_acc": 0.85,
+
+      // Take the baseline results (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Reshape to (T*C*E). Compute std dev, reducing across axis 0. This answers the question: How much did the baseline's performance vary for THIS article? A high value means THIS article caused the baseline to be quite unreliable.
+      "std_of_(baseline_mean_acc_for_this_article)": 0.04,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing along axes 2,1,0. This answers the question: If I pick any self edit at random for this article, how well did it do?
+      "self_edit_mean_acc": 0.88,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing along axes 2,1 to get (T,) shape. Now compute the std dev, reducing across axis 0. This answers the question: For THIS article, how much did our method's performance vary across different self edit templates?
+      "std_of_(self_edit_mean_acc_for_this_article)": 0.05,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the std dev, reducing across axis 2 to get (T, C) shape. Now compute the mean, reducing across axes 1,0. This answers the question: If I pick any self edit at random for THIS article, how variable are its evaluation results?
+      "self_edit_evaluation_noise": 0.01,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean across axis 2 to get (T,C) shape. Now compute the std dev across axis 1 to get (T,) shape. Now compute the mean, reducing over axis 0. This answers the question: If I were to pick a self edit template at random for THIS article, how much does the specific random completion (i.e. the instantiation) affect performance?
+      "self_edit_template_instantiation_noise": 0.02,
+
+      // Take the baseline results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. Let baseline_mean=the scalar result. Now take our method's results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axis 2. (T,C) shape. Now for each number in this (T,C) tensor, subtract baseline_mean. This gives a float tensor of shape (T,C). Now compute the mean, reducing across axes 1,0. This answers the question: "If I pick any self edit at random, what's the gain it provides?" 
+      "self_edit_mean_gain": 0.03,
+
+      // Take the baseline results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. Let baseline_mean=the scalar result. Now take our method's results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axis 2. (T,C) shape. Now for each number in this (T,C) tensor, check if it is greater than baseline_mean. This gives a boolean tensor of shape (T,C). Now compute the mean of this boolean tensor, reducing across axes 1,0. This answers the question: "If I pick any self edit at random for THIS article, what is the probability that it outperforms the baseline?"
+      "self_edit_win_rate": 0.60,
+
+      "self_edit_template_statistics": {
+        // This number is an index into the self edit templates. Its range is [0, num_self_edit_templates-1].
+        "0": { 
+          // Take our method's results (A,T,C,E). Select just the relevant parts for this article and this template. (C,E). Compute the mean, reducing along axes 1,0. This answers the question: If I pick any self edit at random for THIS article and THIS template, how well did it do?
+          "self_edit_mean_acc": 0.86,
+
+          // Take our method's results (A,T,C,E). Select just the relevant parts for this article and this template. (C,E). Compute std dev across axis 1. (C,). Compute mean, reducing over axis 0. This answers the question: For THIS article and THIS template, how much did our method's performance vary? A high value means THIS article and THIS template caused our method to be quite unreliable.
+          "self_edit_evaluation_noise": 0.01,
+
+          // Take our method's results (A,T,C,E). Select just the relevant parts for this article and this template. (C,E). Compute the mean across axis 1 to get (C,) shape. Now compute the std dev across axis 0. This answers the question: For THIS article and THIS template, how much does the specific random completion (i.e. the instantiation) affect performance?
+          "self_edit_template_instantiation_noise": 0.02,
+
+          // Take the baseline results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. Let baseline_mean=the scalar result. Now take our method's results. (A,T,C,E). Select just the relevant parts for this article and this template. (C,E). Compute the mean, reducing over axis 1. (C,) shape. Now for each number in this (C,) tensor, subtract baseline_mean. This gives a float tensor of shape (C,). Now compute the mean, reducing across axis 0. This answers the question: "For THIS article and THIS template, what's the gain it provides?"
+          "self_edit_mean_gain": 0.02,
+
+          // Take the baseline results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. Let baseline_mean=the scalar result. Now take our method's results. (A,T,C,E). Select just the relevant parts for this article and this template. (C,E). Compute the mean, reducing over axis 1. (C,) shape. Now for each number in this (C,) tensor, check if it is greater than baseline_mean. This gives a boolean tensor of shape (C,). Now compute the mean of this boolean tensor, reducing across axis 0. This answers the question: "For THIS article and THIS template, what is the probability that it outperforms the baseline?"
+          "self_edit_win_rate": 0.70,
+
+          "completions": {
+            // This number is an index corresponding to the completion for this template for this article. Its range is [0, num_completions_per_template-1].
+            "0": {
+              // Take our method's results (A,T,C,E). Select just the relevant parts for this article, this template, and this completion. (E,). Compute the mean, reducing along axis 0. This answers the question: For THIS article, THIS template, and THIS completion, how well did it do?
+              "self_edit_mean_acc": 0.88,
+
+              // Take our method's results (A,T,C,E). Select just the relevant parts for this article, this template, and this completion. (E,). Compute the std dev, reducing across axis 0. This answers the question: For THIS article, THIS template, and THIS completion, how variable are its evaluation results?
+              "self_edit_evaluation_noise": 0.01,
+
+              // Take the baseline results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. Let baseline_mean=the scalar result. Now take our method's results. (A,T,C,E). Select just the relevant parts for this article, this template, and this completion. (E,). For each number in this tensor of shape (E,), subtract baseline_mean. Then compute the mean, reducing over axis 0. This answers the question: "For THIS article, THIS template, and THIS completion, what's the gain it provides?"
+              "self_edit_mean_gain": 0.04,
+
+              // Take the baseline results. (A,T,C,E). Select just the relevant parts for this article. (T,C,E). Compute the mean, reducing over axes 2,1,0. Let baseline_mean=the scalar result. Now take our method's results. (A,T,C,E). Select just the relevant parts for this article, this template, and this completion. (E,). For each number in this tensor of shape (E,), check if it is greater than baseline_mean. This gives a boolean tensor of shape (E,). Now compute the mean of this boolean tensor, reducing across axis 0. This answers the question: "For THIS article, THIS template, and THIS completion, what is the probability that it outperforms the baseline?"
+              "self_edit_win_rate": 0.67,
+
+              // Boolean flag indicating that no adapter was trained for this completion and the baseline accuracies were copied forward ("dummy" plan).
+              "is_dummy_adapter": false,
+
+              "evaluation_runs": {
+                // This number is an index corresponding to the evaluation run for this (article, template, completion) triplet. Its range is [0, eval_times-1].
+                "0": {
+                  // This is the accuracy achieved by the baseline model for this specific position in the (a,t,c,e) cartesian product.
+                  "baseline_acc": 0.84,
+                  // This is the accuracy achieved by the adapter model for this specific position in the (a,t,c,e) cartesian product.
+                  "self_edit_acc": 0.9,
+                  "gain": 0.06, // self_edit_acc - baseline_acc
+                  "questions": { // These are all the questions in the SQuAD article used for this specific position in the (a,t,c,e) cartesian product.
+                    // This number is an index corresponding to the question in the article. Its range is [0, number of questions for this article in the dataset-1].
+                    "0": {
+                      "baseline_answer": "...",
+                      "adapter_answer": "...",
+                      "baseline_correct": true,
+                      "adapter_correct": true
+                    }
+                    // ... more questions ...
+                  }
+                }
+                // ... more evaluation runs ...
+              }
+            }
+            // ... more completions ...
+          }
+        }
+        // ... more self edit templates ...
+      }
+    }
+    // ... more articles ...
+  },
+  "self_edit_template_statistics": {
+    "0": {
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the mean, reducing along axes 2,1,0. This answers the question: If I pick a self edit conforming to this template, how well does it perform on average across all articles? This identifies your "best" prompt strategy. Maybe "Socratic Method" (Template A) is consistently better than "Bullet Points" (Template B).
+      "self_edit_template_mean_acc": 0.87,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the mean, reducing along axes 2,1 to get (A,) shape. Now compute the std dev across axis 0. This answers the question: "How robust is the current template across different articles?" A template might be great for History articles but terrible for Science. A low std dev here means the template is "general-purpose."
+      "std_of_(self_edit_template_mean_acc_across_articles)": 0.04,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the std dev, reducing across axis 2 to get (A,C) shape. Now compute the mean, reducing across axes 1,0. This answers the question: "If I pick a self edit conforming to this template at random, how variable are the evaluation results?" This measures Evaluation Noise specific to this template.
+      "self_edit_template_evaluation_noise": 0.025,
+
+      // Take our method's results (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the mean across axis 2 to get (A,C) shape. Now compute the std dev across axis 1 to get (A,) shape. Now compute the mean, reducing over axis 0. This answers the question: "If I were to pick a self edit conforming to this template at random, how much does the specific random completion (i.e. the instantiation) affect performance?" This measures Instantiation Noise specific to this template. If this is high, your template is "brittle" - it relies on getting lucky with the specific training data generated. If low, the template is robust to the random seed used during data generation.
+      "self_edit_template_instantiation_noise": 0.03,
+
+      // Take the baseline results. (A,T,C,E). Compute the mean, reducing over axes 3,2,1 to get baseline_article_means=(A,) shape. Now take our method's results. (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the mean, reducing over axis 2. (A,C) shape. Subtract baseline_article_means[:, None] from this (A,C) tensor, which gives gains of shape (A,C). Finally, compute the mean, reducing across axes 1,0. This answers the question: "If I pick a self edit conforming to this template at random, what's the gain it provides?"
+      "self_edit_template_mean_gain": 0.02,
+
+      // Take the baseline results. (A,T,C,E). Compute the mean, reducing over axes 3,2,1 to get baseline_article_means=(A,) shape. Now take our method's results. (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the mean, reducing over axis 2. (A,C) shape. Now for each number in this (A,C) tensor, check if it is greater than the baseline mean from the corresponding article. This gives a boolean tensor of shape (A,C). Now compute the mean of this boolean tensor, reducing across axes 1,0. This answers the question: "If I pick a self edit conforming to this template at random, what is the probability that it outperforms the baseline?"
+      "self_edit_template_win_rate": 0.63,
+
+      // Metric originating from Hake (1998) as a measure of student improvement. Normalized gain is defined as (adapter_acc - baseline_acc) / (1 - baseline_acc). Take the baseline results. (A,T,C,E). Compute the mean, reducing over axes 3,2,1 to get baseline_article_means=(A,) shape. Now take our method's results. (A,T,C,E). Select just the relevant parts for this template. (A,C,E). Compute the mean, reducing over axis 2. (A,C) shape. Subtract baseline_article_means[:, None] from this (A,C) tensor, which gives gains of shape (A,C). Then, divide this (A,C) tensor by (1 - baseline_mean_article_means[:, None]). This gives an (A,C) tensor of normalized gains. Finally, compute the mean, reducing over axes 1,0 to get self_edit_template_normalized_gain. This answers the question: "If I pick a self edit conforming to this template at random, what's the gain it provides, after you account for the performance of the baseline from the previous iteration?"
+      "self_edit_template_normalized_gain": 0.1
+    }
+  }
+}
