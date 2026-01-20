@@ -1,0 +1,287 @@
+[
+  [
+    {
+      "data_creation_instruction": "Let's read the following passage and generate a list of analogies that compare its content to real-world scenarios, each analogy separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.0005,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    },
+    {
+      "data_creation_instruction": "Analyze the passage and generate a series of 'reverse engineering' steps where each step deconstructs a part of the passage into its core components, then reconstructs it using a different structure or format. Each step should be a separate string, ensuring that the original content is encoded through transformation.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Convert the passage into a series of 10 interconnected analogies, each linking a key concept to a real-world scenario, formatted as 'Concept: [concept] :: Analogy: [analogy]'. Additionally, generate a narrative summary that weaves these analogies into a coherent story, ensuring each analogy is explicitly referenced in the narrative.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.005,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a different perspective, followed by a list of derived implications and a set of hypothetical questions based on the content.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.0,
+        "learning_rate": 0.001,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    },
+    {
+      "data_creation_instruction": "Let's read the passage and generate a series of paraphrased versions, each with a unique structure (e.g., bullet points, Q&A, table format), followed by a list of implications directly or indirectly derived from the content, each separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.005,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a different perspective, followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Analyze the passage and generate a series of 'reverse engineering' steps where each step deconstructs a part of the passage into its core components and then reconstructs it using a different structure (e.g., bullet points, flowchart, cause-effect list), each separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a distinct perspective, followed by a list of derived implications. Each paraphrase and implication should be separated by a newline, ensuring that implications are directly linked to the original content.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    },
+    {
+      "data_creation_instruction": "Analyze the passage and generate a series of 'reverse engineering' steps where each step deconstructs a part of the passage into its core components, then reconstructs it using a different format (e.g., bullet points, Q&A, table). After each reconstruction, derive a list of implications directly or indirectly linked to the content. Ensure each step and implication is separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a different perspective, followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Deconstruct the passage into its core components (e.g., key points, implications, examples) and then reconstruct each component into a different format (e.g., bullet points, Q&A, table). Each reconstruction should be a separate string, ensuring that implications are derived directly or indirectly from the content.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a distinct perspective, followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 15,
+        "gradient_accumulation_steps": 2
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a distinct perspective, followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a different perspective, followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrased version and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each highlighting a distinct perspective, followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    },
+    {
+      "data_creation_instruction": "Generate a series of paraphrased versions of the passage, each in a different format (e.g., bullet points, Q&A, table), followed by a list of implications derived directly or indirectly from the content. Each paraphrase and implication should be separated by a newline.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 1
+      }
+    }
+  ]
+]

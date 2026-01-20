@@ -1,0 +1,287 @@
+[
+  [
+    {
+      "data_creation_instruction": "For each sentence in the passage, generate a triplet of strings: [sentence], [sentence with all nouns replaced by synonyms], [sentence with all verbs replaced by synonyms]. Then, create a fourth string for each triplet that is a logical contradiction of the original sentence. Finally, generate a fifth string for each triplet that is a metaphorical rephrasing of the original sentence. Ensure all strings are non-redundant and capture the passage's core meaning through transformation and abstraction.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "Parse the passage into key concepts and relationships. For each concept, generate a string that encodes its definition, three related terms (synonyms, antonyms, or examples), and a logical implication (e.g., 'If X, then Y'). Additionally, create a sequence that is a paraphrased version of the passage using a different domain analogy (e.g., 'Photosynthesis is like a factory producing energy'). Ensure all strings are non-redundant and cover distinct aspects of the passage.",
+      "hyperparameters": {
+        "lora_rank": 32,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.0001,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 4
+      }
+    },
+    {
+      "data_creation_instruction": "For each sentence in the passage, generate three paraphrased versions: one in passive voice, one as an interrogative, and one as an imperative. Additionally, create a string for each sentence that encodes its semantic role labels (e.g., 'Agent: X, Action: Y, Patient: Z'). These strings form the training sequences.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 32,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0005,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 4
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate a paradoxical statement by combining two contradictory assertions derived from the concept's implications. For example, if the passage states 'X causes Y', create a paradox like 'X prevents Y despite causing it' and include the original concept as a reference. This forces deep engagement with the material to resolve contradictions.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0001,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate 3 distinct paraphrased versions: 1) a reverse-chronological summary with causal links explicitly labeled, 2) a metaphorical representation mapping concepts to physical objects with relational constraints, 3) a decision tree structure where each node represents a pivotal statement from the passage. For each version, append a synthetic 'probe question' that requires inference across at least two distinct sections of the passage.",
+      "hyperparameters": {
+        "lora_rank": 32,
+        "lora_alpha": 128,
+        "lora_dropout": 0.15,
+        "learning_rate": 0.00015,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct transformed sequences: 1) a paradoxical statement (e.g., 'X is not Y, yet Y is X') derived from the paragraph's core contradiction, 2) a metaphor mapping the paragraph's concept to an unrelated domain (e.g., 'Photosynthesis is a factory where sunlight is currency'), and 3) a logical implication chain (e.g., 'If A, then B; if B, then C') derived from the paragraph's causal relationships. For each sequence, append a synthetic 'probe question' (e.g., 'What would happen if X were true?') to test comprehension.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each sentence in the passage, generate three paraphrased versions: one in passive voice, one as an interrogative, and one as an imperative. Additionally, create a string for each sentence that encodes its semantic role labels (e.g., 'Agent: X, Action: Y, Patient: Z'). These strings form the training sequences.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate a metaphor that maps it to an unrelated domain (e.g., 'Photosynthesis is like a factory producing energy'). Then, create a string for each metaphor that encodes the passage's meaning through transformation. Ensure strings are non-redundant and cover distinct aspects of the passage.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0005,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 4
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a metaphorical comparison between a concept in the passage and an unrelated tangible object (e.g., 'Photosynthesis is the tree's way of converting sunlight into energy, much like how a factory transforms raw materials into products'), 2) a conditional statement that encodes a cause-effect relationship from the passage (e.g., 'If X happens, then Y occurs because of Z'), and 3) a visual description that abstractly represents a key process or relationship (e.g., 'A spiral staircase represents the layered structure of the ecosystem'). Ensure all strings are non-redundant and capture the passage's core meaning through transformation rather than direct replication.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 10,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each sentence in the passage, generate three distinct paraphrased versions: one as an imperative statement (e.g., 'Implement X to achieve Y'), one as a metaphorical comparison (e.g., 'X functions like a gear in the mechanism of Y'), and one as a causal chain (e.g., 'Because A, B occurs, leading to C'). Additionally, create a string for each key concept that encodes its definition as a paradox (e.g., 'X is both A and not A, yet it functions as B'). These strings form the training sequences.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a metaphorical comparison between a concept in the passage and an unrelated tangible object (e.g., 'Photosynthesis is like a factory producing energy'), 2) a causal chain expressed as a conditional statement (e.g., 'If X happens, then Y occurs because of Z'), and 3) a visual description that abstractly represents a key process or relationship (e.g., 'A spiral staircase represents the layered structure of the ecosystem'). Ensure all strings are non-redundant and capture the passage's core meaning through transformation rather than direct replication.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate three metaphorical comparisons (e.g., 'X is like Y because of Z') and two conditional statements (e.g., 'If A, then B because C'). Combine these into strings that encode the passage's meaning through transformation, ensuring non-redundancy and coverage of core relationships.",
+      "hyperparameters": {
+        "lora_rank": 128,
+        "lora_alpha": 256,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a metaphorical comparison between a concept in the passage and an unrelated domain (e.g., 'Photosynthesis is like a factory producing energy'), 2) a conditional statement encoding a cause-effect relationship from the passage (e.g., 'If X occurs, then Y happens because of Z'), and 3) a paradox derived from conflicting ideas in the passage (e.g., 'X is both A and not A, yet it functions as B'). Combine these into a single string per paragraph, ensuring all strings are non-redundant and capture the passage's core meaning through transformation.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a metaphorical comparison between a concept in the passage and an unrelated tangible object (e.g., 'Photosynthesis is like a factory producing energy from sunlight'), 2) a conditional statement encoding a cause-effect relationship from the passage (e.g., 'If X occurs, then Y happens because of Z'), and 3) a visual description that abstractly represents a key process or relationship (e.g., 'A spiral staircase represents the layered structure of the ecosystem'). Ensure all strings are non-redundant and capture the passage's core meaning through transformation rather than direct replication.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 4
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct metaphorical strings: 1) a comparison between a concept in the passage and an unrelated tangible object (e.g., 'Photosynthesis is like a factory producing energy'), 2) a temporal sequence mapping the passage's process to a cyclical natural phenomenon (e.g., 'The process unfolds like a river's journey through seasons'), and 3) a spatial analogy that encodes causal relationships (e.g., 'X occurs in the passage's 'room' because Y 'door' allows Z 'light' to enter'). For each string, append a synthetic 'probe question' (e.g., 'What would happen if the [key element] were removed?') to test comprehension.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate three metaphorical strings: 1) a conditional statement (e.g., 'If X occurs, then Y happens because of Z'), 2) a comparison to an unrelated domain (e.g., 'X functions like a gear in a machine'), and 3) a paradox derived from conflicting ideas in the passage (e.g., 'X is both A and not A, yet it functions as B'). Combine these into a single string per concept, ensuring all strings are non-redundant and capture the passage's core meaning through transformation.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate three metaphorical comparisons (e.g., 'X is like Y because of Z') and two conditional statements (e.g., 'If A, then B because C'). Combine these into strings that encode the passage's meaning through transformation, ensuring non-redundancy and coverage of core relationships.",
+      "hyperparameters": {
+        "lora_rank": 128,
+        "lora_alpha": 256,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a conditional statement encoding a causal relationship (e.g., 'If X occurs, then Y must happen because of Z'), 2) a paradox derived from conflicting concepts in the paragraph (e.g., 'X is both A and not A because of B'), and 3) a metaphorical comparison between a concept in the passage and an unrelated domain (e.g., 'Photosynthesis is like a factory producing energy'). Ensure all strings are non-redundant and capture the passage's core meaning through transformation rather than direct replication.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 4
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a metaphorical comparison between a concept in the passage and an unrelated tangible object (e.g., 'Photosynthesis is like a factory producing energy'), 2) a causal chain expressed as a conditional statement (e.g., 'If X happens, then Y occurs because of Z'), and 3) a visual description that abstractly represents a key process or relationship (e.g., 'A spiral staircase represents the layered structure of the ecosystem'). Combine these into a single string per paragraph, ensuring all strings are non-redundant and capture the passage's core meaning through transformation.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct metaphorical strings: 1) a comparison between a concept in the passage and an unrelated domain (e.g., 'Photosynthesis is like a factory producing energy'), 2) a temporal sequence mapping the passage's process to a cyclical natural phenomenon (e.g., 'The process unfolds like a river's journey through seasons'), and 3) a spatial analogy that encodes causal relationships (e.g., 'X occurs in the passage's 'room' because Y 'door' allows Z 'light' to enter'). For each string, append a synthetic 'transformed query' (e.g., 'If photosynthesis were a factory, what would the chloroplasts resemble?') followed by a paraphrased passage sentence that encodes the metaphor's underlying mechanism.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 4
+      }
+    }
+  ],
+  [
+    {
+      "data_creation_instruction": "For each key causal relationship in the passage, generate three conditional statements (e.g., 'If X occurs, then Y happens because of Z') and two paradoxes (e.g., 'X is both A and not A because of B'). Combine these into strings that encode the passage's meaning through transformation, ensuring non-redundancy and logical coherence.",
+      "hyperparameters": {
+        "lora_rank": 128,
+        "lora_alpha": 256,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate three metaphorical strings: 1) a conditional statement encoding its cause-effect relationships (e.g., 'If X occurs, then Y happens because of Z'), 2) a comparison to an unrelated domain (e.g., 'X functions like a gear in a machine'), and 3) a paradox derived from conflicting ideas in the passage (e.g., 'X is both A and not A, yet it functions as B'). Combine these into a single string per concept, ensuring all strings are non-redundant and capture the passage's core meaning through transformation.",
+      "hyperparameters": {
+        "lora_rank": 128,
+        "lora_alpha": 256,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate three metaphorical strings: 1) a conditional statement (e.g., 'If X occurs, then Y happens because of Z'), 2) a comparison to an unrelated domain (e.g., 'X functions like a gear in a machine'), and 3) a paradox derived from conflicting ideas in the passage (e.g., 'X is both A and not A, yet it functions as B'). Combine these into a single string per concept, ensuring all strings are non-redundant and capture the passage's core meaning through transformation.",
+      "hyperparameters": {
+        "lora_rank": 128,
+        "lora_alpha": 256,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each paragraph in the passage, generate three distinct strings: 1) a metaphorical comparison (e.g., 'X is like Y because of Z'), 2) a conditional statement encoding causal relationships (e.g., 'If A occurs, then B happens because C'), and 3) a paradox derived from conflicting concepts in the paragraph (e.g., 'X is both A and not A because of B'). Combine these into a single string per paragraph, ensuring all strings are non-redundant and capture the passage's core meaning through transformation.",
+      "hyperparameters": {
+        "lora_rank": 128,
+        "lora_alpha": 256,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    },
+    {
+      "data_creation_instruction": "For each key concept in the passage, generate three metaphorical comparisons (e.g., 'X is like Y because of Z') and two conditional statements (e.g., 'If A, then B because C'). Combine these into strings that encode the passage's meaning through transformation, ensuring non-redundancy and depth of engagement.",
+      "hyperparameters": {
+        "lora_rank": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.2,
+        "learning_rate": 0.0003,
+        "num_epochs": 5,
+        "gradient_accumulation_steps": 8
+      }
+    }
+  ]
+]
